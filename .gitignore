@@ -1,6 +1,7 @@
 # build output
 dist/
 .output/
+.json/
 
 # dependencies
 node_modules/
@@ -19,5 +20,8 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-icon.d.ts
-*.cache
+# ignore .astro directory
+.astro
+
+# ide
+.idea/

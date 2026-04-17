@@ -1,4 +1,6 @@
 {
-    "IDX.aI.enableInlineCompletion": true,
-    "IDX.aI.enableCodebaseIndexing": true
+  "files.associations": {
+    "*.mdx": "markdown"
+  },
+  "tailwindCSS.experimental.configFile": "src/styles/main.css"
 }

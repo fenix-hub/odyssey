@@ -1,56 +1,64 @@
 ---
-import { parse, isBefore } from 'date-fns';
-import {
-	Container,
-	TextCardSection,
-	BlogPostsList,
-} from '@components/odyssey-theme';
-import Layout from '../../layouts/Page.astro';
-import NewsletterForm from '../../components/forms/NewsletterForm.astro';
+import BlogCard from "@/components/BlogCard.astro";
+import Pagination from "@/components/Pagination.astro";
+import config from "@/config/config.json";
+import Base from "@/layouts/Base.astro";
+import { getListPage, getSinglePage } from "@/lib/contentParser.astro";
+import { getAllTaxonomy, getTaxonomy } from "@/lib/taxonomyParser.astro";
+import { sortByDate } from "@/lib/utils/sortFunctions";
+import PageHeader from "@/partials/PageHeader.astro";
+import PostSidebar from "@/partials/PostSidebar.astro";
 
-const posts = await Astro.glob('./posts/*.mdx').then(posts =>
-	posts
-		.map(({ frontmatter, url }) => ({
-			title: frontmatter.title,
-			description: frontmatter.description,
-			authors: frontmatter.authors,
-			publishDate: parse(frontmatter.publishDate, 'MMMM d, yyyy', new Date()),
-			featuredImage: frontmatter.featuredImage,
-			excerpt: frontmatter.excerpt,
-			href: url,
-		}))
-		.sort((a, b) => {
-			if (isBefore(a.publishDate, b.publishDate)) return 1;
-			if (isBefore(b.publishDate, a.publishDate)) return -1;
-			return 0;
-		})
-);
+const BLOG_FOLDER = "blog";
 
-const seo = {
-	title: 'Blog | Astro Odyssey Theme',
-	description: 'Astro Odyssey Theme Blog Page',
-};
+const postIndex = await getListPage(BLOG_FOLDER, "-index");
+if (postIndex.data.draft) {
+  return Astro.redirect("/404");
+}
+const posts = await getSinglePage(BLOG_FOLDER);
+const allCategories = await getAllTaxonomy(BLOG_FOLDER, "categories");
+const categories = await getTaxonomy(BLOG_FOLDER, "categories");
+const tags = await getTaxonomy(BLOG_FOLDER, "tags");
+const sortedPosts = sortByDate(posts);
+const totalPages: number = Math.ceil(posts.length / config.settings.pagination);
+const currentPosts = sortedPosts.slice(0, config.settings.pagination);
 ---
 
-<Layout {seo}>
-	<Container>
-		<TextCardSection>
-			<h1>Odyssey Blog</h1>
-			<p>
-				View our blog to stay up to date on the latest news about our business.
-				Want to be the first to hear about a new blog post? Join our newsletter!
-			</p>
-			<NewsletterForm />
-		</TextCardSection>
-		<section class="blog-posts-list__section">
-			<h2>Recent Posts</h2>
-			<BlogPostsList posts={posts} />
-		</section>
-	</Container>
-</Layout>
+<Base
+  title={postIndex.data.title}
+  meta_title={postIndex.data.meta_title}
+  image={postIndex.data.image}
+  description={postIndex.data.description}
+>
+  <PageHeader title={postIndex?.data.title} />
+  <section class="section">
+    <div class="container">
+      <div class="row gx-5">
+        <!-- blog posts -->
+        <div class="lg:col-8">
+          <div class="row">
+            {
+              currentPosts.map((post) => (
+                <div class="mb-14 md:col-6">
+                  <BlogCard data={post} />
+                </div>
+              ))
+            }
+          </div>
+          <Pagination
+            section={BLOG_FOLDER}
+            currentPage={1}
+            totalPages={totalPages}
+          />
+        </div>
 
-<style>
-	.blog-posts-list__section {
-		margin: var(--section-margin) auto;
-	}
-</style>
+        <!-- sidebar -->
+        <PostSidebar
+          categories={categories}
+          tags={tags}
+          allCategories={allCategories}
+        />
+      </div>
+    </div>
+  </section>
+</Base>
