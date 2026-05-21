@@ -1,15 +1,15 @@
 {
   "site": {
-    "title": "Astroplate",
+    "title": "Godot Engine Italia",
     "base_url": "https://astroplate.netlify.app",
     "base_path": "/",
     "trailing_slash": false,
-    "favicon": "/images/favicon.png",
-    "logo": "/images/logo.png",
-    "logo_darkmode": "/images/logo-darkmode.png",
-    "logo_width": "150",
-    "logo_height": "30",
-    "logo_text": "Astroplate"
+    "favicon": "/images/cropped-logo-GE-I-150x150.png",
+    "logo": "/images/logo-esteso.png",
+    "logo_darkmode": "/images/logo-esteso.png",
+    "logo_width": "300",
+    "logo_height": "64",
+    "logo_text": "Godot Engine Italia"
   },
 
   "settings": {
@@ -24,19 +24,19 @@
 
   "announcement": {
     "enable": true,
-    "content": "<span class='text-center block'>♥️ Loving Astroplate? <a class='underline' href='https://github.com/zeon-studio/astroplate' target='_blank' rel='noopener'>Please ⭐️ on Github</a></span>",
+    "content": "<span class='text-center block'>🎮 Benvenuto in Godot Engine Italia! <a class='underline' href='#' target='_blank' rel='noopener'>Unisciti alla community →</a></span>",
     "expire_days": 7
   },
 
   "params": {
     "contact_form_action": "#",
-    "copyright": "Designed And Developed by [Zeon Studio](https://zeon.studio)"
+    "copyright": "Godot Engine Italia - Community dedicata a Godot Engine"
   },
 
   "navigation_button": {
     "enable": true,
-    "label": "Github",
-    "link": "https://github.com/zeon-studio/astroplate"
+    "label": "Discord",
+    "link": "#"
   },
 
   "google_tag_manager": {
@@ -51,8 +51,8 @@
   },
 
   "metadata": {
-    "meta_author": "zeon.studio",
+    "meta_author": "Godot Engine Italia",
     "meta_image": "/images/og-image.png",
-    "meta_description": "astro and tailwind boilerplate"
+    "meta_description": "La community italiana dedicata a Godot Engine: eventi, risorse e contenuti per sviluppatori, game designer e creativi."
   }
 }
