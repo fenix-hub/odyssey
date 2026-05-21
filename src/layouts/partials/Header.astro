@@ -22,8 +22,8 @@ const { navigation_button, settings } = config;
 const { pathname } = Astro.url;
 ---
 
-<header class={`header z-30 ${settings.sticky_header && "sticky top-0"}`}>
-  <nav class="navbar container">
+<header class={`header z-30 ${settings.sticky_header && "fixed top-0 left-0 right-0 bg-blue-100/10 backdrop-blur-sm"}`}>
+  <nav class="navbar container max-w-2xl mx-auto px-4">
     <!-- logo -->
     <div class="order-0">
       <Logo />
@@ -32,7 +32,7 @@ const { pathname } = Astro.url;
     <input id="nav-toggle" type="checkbox" class="hidden" />
     <label
       for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center lg:hidden text-text-dark dark:text-white lg:order-1"
+      class="order-3 cursor-pointer flex items-center lg:hidden text-white lg:order-1"
     >
       <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
         <title>Menu Open</title>
@@ -131,7 +131,7 @@ const { pathname } = Astro.url;
       {
         settings.search && (
           <button
-            class="border-border text-text-dark hover:text-primary dark:border-darkmode-border mr-5 inline-block border-r pr-5 text-xl dark:text-white dark:hover:text-darkmode-primary"
+            class="mr-5 inline-block border-r border-white/30 pr-5 text-xl text-white hover:text-white/80"
             aria-label="search"
             data-search-trigger
           >

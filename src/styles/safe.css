@@ -1,3 +1,10 @@
+/* Custom font overrides */
+:root {
+  --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --header-font-family: "Montserrat", sans-serif;
+}
+
 /* navbar toggler */
 input#nav-toggle:checked + label #show-button {
   @apply hidden;
