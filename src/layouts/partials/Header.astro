@@ -20,9 +20,18 @@ export interface NavigationLink {
 const { main }: { main: NavigationLink[] } = menu;
 const { navigation_button, settings } = config;
 const { pathname } = Astro.url;
+const isHome = pathname === "/";
 ---
 
-<header class={`header z-30 ${settings.sticky_header && "fixed top-0 left-0 right-0 bg-blue-100/10 backdrop-blur-sm"}`}>
+<header
+  id="site-header"
+  data-home={isHome ? "true" : "false"}
+  class:list={[
+    "header z-30",
+    settings.sticky_header && "fixed top-0 left-0 right-0",
+    !isHome && "header-solid",
+  ]}
+>
   <nav class="navbar container max-w-2xl mx-auto px-4">
     <!-- logo -->
     <div class="order-0">
@@ -32,7 +41,7 @@ const { pathname } = Astro.url;
     <input id="nav-toggle" type="checkbox" class="hidden" />
     <label
       for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center lg:hidden text-white lg:order-1"
+      class="header-toggle order-3 cursor-pointer flex items-center lg:hidden lg:order-1"
     >
       <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
         <title>Menu Open</title>
@@ -131,7 +140,7 @@ const { pathname } = Astro.url;
       {
         settings.search && (
           <button
-            class="mr-5 inline-block border-r border-white/30 pr-5 text-xl text-white hover:text-white/80"
+            class="header-search mr-5 inline-block border-r pr-5 text-xl"
             aria-label="search"
             data-search-trigger
           >
@@ -157,3 +166,33 @@ const { pathname } = Astro.url;
     </div>
   </nav>
 </header>
+
+<script is:inline>
+  function initHeaderContrast() {
+    const header = document.getElementById("site-header");
+    if (!header) return;
+
+    const isHomeHeader = header.dataset.home === "true";
+
+    if (window.__headerScrollHandler) {
+      window.removeEventListener("scroll", window.__headerScrollHandler);
+    }
+
+    if (!isHomeHeader) {
+      header.classList.add("header-solid");
+      return;
+    }
+
+    const onScroll = () => {
+      header.classList.toggle("header-solid", window.scrollY > 80);
+    };
+
+    window.__headerScrollHandler = onScroll;
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  document.addEventListener("astro:page-load", initHeaderContrast);
+  initHeaderContrast();
+</script>
+
