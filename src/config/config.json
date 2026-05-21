@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Godot Engine Italia",
-    "base_url": "https://astroplate.netlify.app",
+    "base_url": "https://godotengineitalia.org",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/cropped-logo-GE-I-150x150.png",
